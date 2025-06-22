@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -12,11 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Sudoku {
-	class Tille extends JButton {
+	class Tile extends JButton {
 		int rowNumber;
 		int columnNumber;
 
-		public Tille(int rowNumber, int columnNumber) {
+		public Tile(int rowNumber, int columnNumber) {
 			super();
 			this.rowNumber = rowNumber;
 			this.columnNumber = columnNumber;
@@ -39,6 +41,9 @@ public class Sudoku {
 	JPanel boardPanel = new JPanel();
 	JPanel buttonsPanel = new JPanel();
 
+	JButton numSelected = null;
+	int errors = 0;
+
 	public Sudoku() {
 		frame.setVisible(true);
 		frame.setSize(boardWidth, boardHeight);
@@ -57,50 +62,86 @@ public class Sudoku {
 		boardPanel.setLayout(new GridLayout(9, 9));
 		setupTiles();
 		frame.add(boardPanel, BorderLayout.CENTER);
-		
+
 		buttonsPanel.setLayout(new GridLayout(1, 9));
 		settupButtons();
 		frame.add(buttonsPanel, BorderLayout.SOUTH);
-		
+
 		frame.setVisible(true);
 	}
 
 	void setupTiles() {
 		for (int r = 0; r < 9; r++) {
 			for (int c = 0; c < 9; c++) {
-				Tille tille = new Tille(r, c);
-				char tilleChar = puzzle[r].charAt(c);
-				if (tilleChar != '-') {
-					tille.setFont(new Font("Arial", Font.BOLD, 20));
-					tille.setText(String.valueOf(tilleChar));
-					tille.setBackground(Color.lightGray);
+				Tile tile = new Tile(r, c);
+				char tileChar = puzzle[r].charAt(c);
+				if (tileChar != '-') {
+					tile.setFont(new Font("Arial", Font.BOLD, 20));
+					tile.setText(String.valueOf(tileChar));
+					tile.setBackground(Color.lightGray);
 				} else {
-					tille.setFont(new Font("Arial", Font.PLAIN, 20));
-					tille.setBackground(Color.WHITE);
+					tile.setFont(new Font("Arial", Font.PLAIN, 20));
+					tile.setBackground(Color.WHITE);
 				}
 				if ((r == 2 && c == 2) || (r == 2 && c == 5) || (r == 5 && c == 2) || (r == 5 && c == 5)) {
-					tille.setBorder(BorderFactory.createMatteBorder(1, 1, 5, 5, Color.BLACK));
+					tile.setBorder(BorderFactory.createMatteBorder(1, 1, 5, 5, Color.BLACK));
 				} else if (r == 2 || r == 5) {
-					tille.setBorder(BorderFactory.createMatteBorder(1, 1, 5, 1, Color.BLACK));
+					tile.setBorder(BorderFactory.createMatteBorder(1, 1, 5, 1, Color.BLACK));
 				} else if (c == 2 || c == 5) {
-					tille.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 5, Color.BLACK));
-				}else {
-					tille.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+					tile.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 5, Color.BLACK));
+				} else {
+					tile.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				}
-				tille.setFocusable(false);
-				boardPanel.add(tille);
+				tile.setFocusable(false);
+				boardPanel.add(tile);
+
+				tile.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						Tile tile = (Tile) e.getSource();
+						int r = tile.rowNumber;
+						int c = tile.columnNumber;
+						if (numSelected != null) {
+							if (tile.getText() != "") {
+								return;
+							}
+							String numSelectedText = numSelected.getText();
+							String tileSolution = String.valueOf(solution[r].charAt(c));
+							if (tileSolution == numSelectedText) {
+								tile.setText(numSelectedText);
+							} else {
+								errors += 1;
+								textLabel.setText("Sudoku: " + String.valueOf(errors));
+							}
+						}
+					}
+				});
 			}
 		}
 	}
-	
+
 	void settupButtons() {
-		for(int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			JButton button = new JButton();
 			button.setFont(new Font("Arial", Font.BOLD, 20));
 			button.setText(String.valueOf(i));
 			button.setFocusable(false);
 			button.setBackground(Color.white);
 			buttonsPanel.add(button);
+
+			button.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JButton button = (JButton) e.getSource();
+					if (numSelected != null) {
+						numSelected.setBackground(Color.white);
+					}
+					numSelected = button;
+					numSelected.setBackground(Color.lightGray);
+				}
+			});
 		}
 	}
 }
