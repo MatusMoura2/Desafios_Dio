@@ -22,7 +22,7 @@ O objetivo do projeto é praticar conceitos básicos de programação Java, como
 
 ## ✅ Próximos passos (melhorias futuras)
 
-- Implementar entrada de dados via teclado (Scanner)
+- Implementar entrada de dados via teclado (KeyEvennt)
 - Adicionar verificação de término de jogo
 - Criar um gerador de Sudoku aleatório
 - Melhorar a interface (ex: modo console interativo)
