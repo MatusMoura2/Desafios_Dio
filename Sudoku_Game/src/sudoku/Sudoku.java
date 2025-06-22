@@ -108,7 +108,7 @@ public class Sudoku {
 							}
 							String numSelectedText = numSelected.getText();
 							String tileSolution = String.valueOf(solution[r].charAt(c));
-							if (tileSolution == numSelectedText) {
+							if (tileSolution.equals(numSelectedText)) {
 								tile.setText(numSelectedText);
 							} else {
 								errors += 1;
