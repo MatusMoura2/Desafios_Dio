@@ -54,6 +54,7 @@ public class Sudoku {
 		boardPanel.setLayout(new GridLayout(9, 9));
 		setupTiles();
 		frame.add(boardPanel,BorderLayout.CENTER);
+		frame.setVisible(true);
 	}
 
 	void setupTiles() {
@@ -61,7 +62,10 @@ public class Sudoku {
 			for (int c = 0; c < 9; c++) {
 				Tille tille = new Tille(r, c);
 				char tilleChar = puzzle[r].charAt(c);
-				tille.setText(String.valueOf(tilleChar));
+				if(tilleChar != '-') {
+					tille.setText(String.valueOf(tilleChar));
+				}
+				tille.setFocusable(false);
 				boardPanel.add(tille);
 			}
 		}
