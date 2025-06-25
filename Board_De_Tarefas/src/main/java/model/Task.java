@@ -8,6 +8,7 @@ public class Task {
 	private String title;
 	private String description;
 	private String status;
+	
 	public Task(UUID id, String title, String description, String status) {
 		this.id = id;
 		this.title = title;
@@ -15,6 +16,9 @@ public class Task {
 		this.status = status;
 	}
 	
+	public Task() {
+	}
+
 	public UUID getId() {
 		return id;
 	}
