@@ -47,5 +47,24 @@ public class TaskDAO {
 		return tasks;
 	}
 	
+	public void delete (UUID id) throws SQLException{
+		String sql = "DELETE FROM tarefas WHERE id = ?";
+		try(Connection connection = ConnectionFactory.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+			preparedStatement.setString(1, id.toString());
+			preparedStatement.executeUpdate();
+		}
+	}
 	
+	public void updatev(Task task) throws SQLException{
+		String sql = "UPDATE tarefas SET titulo = ?, descricao = ?, status = ? WHERE id = ?";
+		try(Connection connection = ConnectionFactory.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+			preparedStatement.setString(1, task.getTitle());
+			preparedStatement.setString(2, task.getDescription());
+			preparedStatement.setString(3, task.getStatus());
+			preparedStatement.setString(4, task.getId().toString());
+			preparedStatement.executeUpdate();
+		}
+	}
 }
