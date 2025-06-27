@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>Criar Tarefa</title>
+</h:head>
+<h:body>
+    <h2>Nova Tarefa</h2>
+
+    <h:form>
+        <h:outputLabel value="Título: " />
+        <h:inputText value="#{taskBean.task.title}" /><br/>
+
+        <h:outputLabel value="Descrição: " />
+        <h:inputTextarea value="#{taskBean.task.description}" /><br/>
+
+        <h:outputLabel value="Status: " />
+        <h:inputText value="#{tarefaBean.task.status}" /><br/>
+
+        <h:commandButton value="Salvar" action="#{taskBean.save}" />
+    </h:form>
+
+    <h:link value="Voltar para a lista" outcome="listar.xhtml" />
+</h:body>
+</html>
