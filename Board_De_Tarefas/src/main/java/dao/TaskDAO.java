@@ -15,16 +15,16 @@ import util.ConnectionFactory;
 public class TaskDAO {
 
 	public void saveTask(Task task) throws SQLException{
-		
+
 		String sql = "INSERT INTO task(id, title, description, status) VALUES (?, ?, ?, ?)";
-		
+
 		try(Connection connection = ConnectionFactory.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)){
 					preparedStatement.setString(1, task.getId().toString());
 					preparedStatement.setString(2, task.getTitle());
 					preparedStatement.setString(3, task.getDescription());
 					preparedStatement.setString(4, task.getStatus());
-					
+
 					preparedStatement.executeUpdate();
 				}
 	}
@@ -43,10 +43,10 @@ public class TaskDAO {
 				tasks.add(task);
 			}
 		}
-		
+
 		return tasks;
 	}
-	
+
 	public void delete (UUID id) throws SQLException{
 		String sql = "DELETE FROM tarefas WHERE id = ?";
 		try(Connection connection = ConnectionFactory.getConnection();
@@ -55,7 +55,7 @@ public class TaskDAO {
 			preparedStatement.executeUpdate();
 		}
 	}
-	
+
 	public void updatev(Task task) throws SQLException{
 		String sql = "UPDATE tarefas SET titulo = ?, descricao = ?, status = ? WHERE id = ?";
 		try(Connection connection = ConnectionFactory.getConnection();

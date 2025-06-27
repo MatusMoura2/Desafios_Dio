@@ -3,19 +3,19 @@ package model;
 import java.util.UUID;
 
 public class Task {
-	
+
 	private UUID id;
 	private String title;
 	private String description;
 	private String status;
-	
+
 	public Task(UUID id, String title, String description, String status) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.status = status;
 	}
-	
+
 	public Task() {
 	}
 
