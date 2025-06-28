@@ -1,0 +1,4 @@
+dao/TaskDAO.class
+beans/TaskBean.class
+model/Task.class
+util/ConnectionFactory.class
